@@ -21,7 +21,7 @@
       max-width: 700px;
       margin: auto;
       padding: 24px;
-      background: rgba(255, 255, 255, 0.65);
+      background: rgba(255, 255, 255, 0.6);
       border-radius: 16px;
       box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
     }
@@ -92,10 +92,27 @@
     }
 
     .page-break {
-      background: url('background-2.jpg') no-repeat center center fixed;
+      height: 80px;
+      background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.85)), url('background-2.jpg') no-repeat center center fixed;
       background-size: cover;
-      background-attachment: fixed;
-      height: 300px;
+    }
+
+    input, textarea, select {
+      display: block;
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button[type="submit"] {
+      padding: 10px 20px;
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -132,11 +149,12 @@
     <div class="section">
       <h2>RSVP</h2>
       <form id="rsvp-form">
-        <input type="text" id="rsvp-nama" placeholder="Nama Anda" required><br>
+        <input type="text" id="rsvp-nama" placeholder="Nama Anda" required>
         <select id="rsvp-kehadiran">
           <option value="Hadir">Hadir</option>
           <option value="Tidak Hadir">Tidak Hadir</option>
-        </select><br>
+        </select>
+        <input type="number" id="rsvp-pax" placeholder="Jumlah Orang" min="1">
         <button type="submit">Kirim</button>
       </form>
     </div>
@@ -144,8 +162,8 @@
     <div class="section">
       <h2>Ucapan & Doa</h2>
       <form id="wish-form">
-        <input type="text" id="nama" placeholder="Nama Anda" required><br>
-        <textarea id="pesan" placeholder="Ucapan dan Doa" required></textarea><br>
+        <input type="text" id="nama" placeholder="Nama Anda" required>
+        <textarea id="pesan" placeholder="Ucapan dan Doa" required></textarea>
         <button type="submit">Kirim</button>
       </form>
 
@@ -201,6 +219,7 @@
     const rsvpForm = document.getElementById('rsvp-form');
     const rsvpNama = document.getElementById('rsvp-nama');
     const rsvpKehadiran = document.getElementById('rsvp-kehadiran');
+    const rsvpPax = document.getElementById('rsvp-pax');
 
     let wishes = [];
     let currentPage = 1;
@@ -221,11 +240,13 @@
       e.preventDefault();
       const data = {
         nama: rsvpNama.value,
-        kehadiran: rsvpKehadiran.value
+        kehadiran: rsvpKehadiran.value,
+        pax: rsvpPax.value
       };
       db.ref('rsvp').push(data);
       rsvpNama.value = '';
       rsvpKehadiran.value = 'Hadir';
+      rsvpPax.value = '';
       alert('Terima kasih atas konfirmasi kehadirannya!');
     });
 
