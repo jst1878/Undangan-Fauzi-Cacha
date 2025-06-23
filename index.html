@@ -192,9 +192,12 @@
       const nama = document.getElementById("nama").value.trim();
       const pesan = document.getElementById("pesan").value.trim();
       if (nama && pesan) {
-        db.ref("wishes").push({ nama, pesan });
-        document.getElementById("nama").value = "";
-        document.getElementById("pesan").value = "";
+        db.ref("wishes").push({ nama, pesan }).then(() => {
+          document.getElementById("nama").value = "";
+          document.getElementById("pesan").value = "";
+          currentPage = 1;
+          renderPage(currentPage);
+        });
       }
     });
 
