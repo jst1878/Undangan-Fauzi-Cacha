@@ -16,8 +16,8 @@
     }
 
     .background-1, .background-2, .background-3 {
-      background-size: contain;
-      background-position: center center;
+      background-size: cover;
+      background-position: center top;
       background-attachment: scroll;
       background-repeat: no-repeat;
       background-color: #fff;
@@ -45,6 +45,22 @@
     h1, h2, h3 {
       text-align: center;
       margin-bottom: 8px;
+    }
+
+    .dynamic-title {
+      font-size: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .dynamic-title span {
+      font-weight: 600;
+    }
+    .dynamic-title .amp {
+      font-size: 52px;
+      line-height: 1;
     }
 
     .countdown {
@@ -150,7 +166,11 @@
 
   <div class="background-1">
     <div class="container">
-      <h1>Fauzi & Liansky</h1>
+      <h1 class="dynamic-title">
+        <span>Fauzi</span>
+        <span class="amp">&</span>
+        <span>Liansky</span>
+      </h1>
       <h3>Pernikahan - 27 Juli 2025</h3>
       <div class="countdown" id="countdown">Menghitung waktu...</div>
     </div>
@@ -232,17 +252,15 @@
       isPlaying = !isPlaying;
     });
 
-    // Countdown Timer
     const targetDate = new Date("2025-07-27T00:00:00+07:00").getTime();
     const countdownElement = document.getElementById("countdown");
     setInterval(() => {
       const now = new Date().getTime();
       const distance = targetDate - now;
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const weeks = Math.floor(distance / (1000 * 60 * 60 * 24 * 7));
+      const days = Math.floor((distance % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
       const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      countdownElement.textContent = `${days} hari ${hours} jam ${minutes} menit ${seconds} detik`;
+      countdownElement.textContent = `${weeks} minggu ${days} hari ${hours} jam`;
     }, 1000);
   </script>
 </body>
