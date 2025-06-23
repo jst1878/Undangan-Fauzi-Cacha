@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Undangan Pernikahan Fauzi & Liansky</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       margin: 0;
       padding: 0;
       color: #333;
-      background: url('https://jst1878.github.io/Undangan-Fauzi-Cacha/background.jpg') no-repeat center center fixed;
+      background: url('background.jpg') no-repeat center center fixed;
       background-size: cover;
-      background-attachment: fixed;
     }
 
     .container {
@@ -28,7 +31,6 @@
 
     h1, h2, h3 {
       text-align: center;
-      margin-bottom: 8px;
     }
 
     .countdown {
@@ -48,7 +50,6 @@
 
     img {
       max-width: 100%;
-      height: auto;
       border-radius: 12px;
     }
 
@@ -60,16 +61,10 @@
       padding: 14px;
       background: #444;
       color: white;
-      text-decoration: none;
       border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
-    }
-
-    .qr img {
-      width: 180px;
-      margin: 10px;
-      border-radius: 8px;
+      border: none;
     }
 
     input, textarea, select {
@@ -78,18 +73,9 @@
       margin: 8px 0;
       border-radius: 8px;
       border: 1px solid #ccc;
-      font-size: 16px;
     }
 
-    p {
-      line-height: 1.6;
-    }
-
-    a {
-      color: #0066cc;
-    }
-
-    #wish-list div, #rsvp-list p {
+    .entry {
       background: white;
       padding: 12px;
       border-radius: 8px;
@@ -106,7 +92,7 @@
     <div class="countdown" id="countdown">Menghitung waktu...</div>
 
     <div class="section photo">
-      <img src="foto-berdua.jpg" alt="Fauzi & Liansky">
+      <img src="foto-berdua.jpg" alt="Fauzi & Liansky" />
     </div>
 
     <div class="section">
@@ -136,11 +122,12 @@
       <p><strong>Catatan:</strong> Harap <em>lepas sepatu</em> sebelum memasuki area acara.</p>
     </div>
 
+    <!-- RSVP -->
     <div class="section">
       <h2>Konfirmasi Kehadiran</h2>
       <form id="rsvp-form">
-        <input type="text" name="nama" placeholder="Nama Anda" required>
-        <select name="kehadiran" required>
+        <input type="text" id="rsvp-nama" placeholder="Nama Anda" required />
+        <select id="rsvp-kehadiran" required>
           <option value="">Pilih Kehadiran</option>
           <option value="Hadir - Akad">Hadir - Akad</option>
           <option value="Hadir - Resepsi 1">Hadir - Resepsi 1</option>
@@ -152,25 +139,26 @@
       <div id="rsvp-list"></div>
     </div>
 
+    <!-- Wishes -->
     <div class="section">
       <h2>Ucapan & Doa</h2>
       <form id="wish-form">
-        <input type="text" name="nama" placeholder="Nama Anda" required>
-        <textarea name="pesan" placeholder="Tulis ucapan dan doa..." required></textarea>
+        <input type="text" id="wish-nama" placeholder="Nama Anda" required />
+        <textarea id="wish-pesan" placeholder="Tulis ucapan dan doa..." required></textarea>
         <button type="submit" class="button">Kirim Ucapan</button>
       </form>
       <div id="wish-list"></div>
     </div>
 
+    <!-- Gift -->
     <div class="section">
       <h2>Hadiah</h2>
       <p>Silakan kunjungi daftar kado kami di link berikut:</p>
       <a class="button" href="https://www.giftster.com/list/Z7Ogt/">Lihat Gift List</a>
-
       <div class="qr">
         <p>Atau kirim melalui QR berikut:</p>
-        <img src="qr-fauzi.png" alt="QR Code Fauzi">
-        <img src="qr-liansky.png" alt="QR Code Liansky">
+        <img src="qr-fauzi.png" alt="QR Code Fauzi" />
+        <img src="qr-liansky.png" alt="QR Code Liansky" />
       </div>
     </div>
 
@@ -183,7 +171,20 @@
   </div>
 
   <script>
-    // Countdown ke akad
+    // Init Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyD_XJTed1xlR885PImafVa5dRXlaDtkT4M",
+      authDomain: "fauzi-cacha.firebaseapp.com",
+      databaseURL: "https://fauzi-cacha-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "fauzi-cacha",
+      storageBucket: "fauzi-cacha.firebasestorage.app",
+      appId: "1:215870485063:web:0af6f750fd09113e4ef762",
+      measurementId: "G-8J1TKRWZV9"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // Countdown
     const countdown = document.getElementById("countdown");
     const targetDate = new Date("July 27, 2025 07:00:00 GMT+0700").getTime();
     setInterval(() => {
@@ -200,32 +201,53 @@
       countdown.innerHTML = `Menuju Akad: ${weeks} minggu ${days} hari ${hours} jam lagi`;
     }, 1000);
 
-    // Form RSVP
-    document.getElementById("rsvp-form").addEventListener("submit", function (e) {
+    // RSVP submit
+    document.getElementById("rsvp-form").addEventListener("submit", function(e) {
       e.preventDefault();
-      const nama = this.nama.value.trim();
-      const kehadiran = this.kehadiran.value;
+      const nama = document.getElementById("rsvp-nama").value.trim();
+      const kehadiran = document.getElementById("rsvp-kehadiran").value;
       if (nama && kehadiran) {
-        const list = document.getElementById("rsvp-list");
-        const item = document.createElement("p");
-        item.textContent = `${nama} - ${kehadiran}`;
-        list.appendChild(item);
+        db.ref("rsvp").push({ nama, kehadiran });
         this.reset();
       }
     });
 
-    // Form Ucapan
-    document.getElementById("wish-form").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const nama = this.nama.value.trim();
-      const pesan = this.pesan.value.trim();
-      if (nama && pesan) {
-        const list = document.getElementById("wish-list");
+    // Tampilkan RSVP
+    const rsvpList = document.getElementById("rsvp-list");
+    db.ref("rsvp").on("value", snapshot => {
+      rsvpList.innerHTML = "";
+      snapshot.forEach(child => {
+        const data = child.val();
         const item = document.createElement("div");
-        item.innerHTML = `<strong>${nama}</strong><br>${pesan}`;
-        list.prepend(item);
+        item.className = "entry";
+        item.textContent = `${data.nama} - ${data.kehadiran}`;
+        rsvpList.appendChild(item);
+      });
+    });
+
+    // Ucapan submit
+    document.getElementById("wish-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const nama = document.getElementById("wish-nama").value.trim();
+      const pesan = document.getElementById("wish-pesan").value.trim();
+      if (nama && pesan) {
+        db.ref("wishes").push({ nama, pesan });
         this.reset();
       }
+    });
+
+    // Tampilkan ucapan
+    const wishList = document.getElementById("wish-list");
+    db.ref("wishes").on("value", snapshot => {
+      wishList.innerHTML = "";
+      const data = [];
+      snapshot.forEach(child => data.push(child.val()));
+      data.reverse().forEach(entry => {
+        const item = document.createElement("div");
+        item.className = "entry";
+        item.innerHTML = `<strong>${entry.nama}</strong><br>${entry.pesan}`;
+        wishList.appendChild(item);
+      });
     });
   </script>
 </body>
