@@ -12,16 +12,31 @@
       margin: 0;
       padding: 0;
       color: #333;
-      background: url('background-3.jpg') no-repeat center center fixed;
+      background: #fff;
+    }
+
+    .background-1, .background-2, .background-3 {
       background-size: cover;
-      background-attachment: fixed;
+      background-position: center center;
+      background-attachment: scroll;
+      background-repeat: no-repeat;
+    }
+
+    .background-1 {
+      background-image: url('background-1.jpg');
+    }
+    .background-2 {
+      background-image: url('background-2.jpg');
+    }
+    .background-3 {
+      background-image: url('background-3.jpg');
     }
 
     .container {
       max-width: 700px;
       margin: auto;
       padding: 24px;
-      background: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.6);
       border-radius: 16px;
       box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
     }
@@ -47,7 +62,6 @@
     }
 
     img {
-      width: auto;
       max-width: 100%;
       height: auto;
       border-radius: 12px;
@@ -92,12 +106,6 @@
       font-size: 14px;
     }
 
-    .page-break {
-      height: 60px;
-      background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.85));
-      background-size: cover;
-    }
-
     input, textarea, select {
       display: block;
       width: 100%;
@@ -137,80 +145,95 @@
   <audio id="bg-music" autoplay loop>
     <source src="musik-latar.mp3" type="audio/mpeg">
   </audio>
-
   <button id="music-toggle">🔊</button>
 
-  <div class="container">
-    <h1>Fauzi & Liansky</h1>
-    <h3>Pernikahan - 27 Juli 2025</h3>
-    <div class="countdown" id="countdown">Menghitung waktu...</div>
-  </div>
-
-  <div class="page-break"></div>
-
-  <div class="container">
-    <div class="section photo">
-      <img src="foto-berdua.jpg" alt="Fauzi & Liansky">
-    </div>
-
-    <div class="section">
-      <h2>Undangan</h2>
-      <p>Dengan penuh kebahagiaan, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dalam acara pernikahan kami:</p>
-
-      <h3>Akad Nikah</h3>
-      <p>Minggu, 27 Juli 2025<br>07.00 – 09.00 WIB<br><strong>Masjid Baiturrahman Pondok Pinang</strong><br><a href="https://maps.app.goo.gl/BbcKU5Lmzu8Tw4wJ7" target="_blank">Lihat Lokasi</a></p>
-
-      <h3>Resepsi Sesi 1</h3>
-      <p>10.00 – 12.00 WIB<br><strong>Rumah Fauzi - Jl. Contoh Alamat No. 123</strong></p>
-
-      <h3>Resepsi Sesi 2</h3>
-      <p>13.00 – 15.00 WIB<br><strong>Rumah Fauzi - Jl. Contoh Alamat No. 123</strong></p>
-
-      <p><strong>Catatan:</strong> Harap <em>lepas sepatu</em> sebelum memasuki area acara.</p>
+  <div class="background-1">
+    <div class="container">
+      <h1>Fauzi & Liansky</h1>
+      <h3>Pernikahan - 27 Juli 2025</h3>
+      <div class="countdown" id="countdown">Menghitung waktu...</div>
     </div>
   </div>
 
-  <div class="page-break"></div>
+  <div class="background-2">
+    <div class="container">
+      <div class="section photo">
+        <img src="foto-berdua.jpg" alt="Fauzi & Liansky">
+      </div>
 
-  <div class="container">
-    <div class="section">
-      <h2>Konfirmasi Kehadiran (RSVP)</h2>
-      <form id="rsvpForm">
-        <input type="text" id="rsvpNama" placeholder="Nama Anda" required>
-        <select id="rsvpStatus">
-          <option value="Hadir">Hadir</option>
-          <option value="Tidak Hadir">Tidak Hadir</option>
-        </select>
-        <input type="number" id="rsvpJumlah" placeholder="Jumlah Orang" required>
-        <button type="submit">Kirim</button>
-      </form>
-    </div>
+      <div class="section">
+        <h2>Undangan</h2>
+        <p>Dengan penuh kebahagiaan, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dalam acara pernikahan kami:</p>
 
-    <div class="section">
-      <h2>Ucapan & Doa</h2>
-      <form id="wishForm">
-        <input type="text" id="wishNama" placeholder="Nama Anda" required>
-        <textarea id="wishPesan" rows="3" placeholder="Ucapan dan Doa" required></textarea>
-        <button type="submit">Kirim</button>
-      </form>
-      <div id="wishList"></div>
-      <div id="pagination"></div>
-    </div>
+        <h3>Akad Nikah</h3>
+        <p>Minggu, 27 Juli 2025<br>07.00 – 09.00 WIB<br><strong>Masjid Baiturrahman Pondok Pinang</strong><br><a href="https://maps.app.goo.gl/BbcKU5Lmzu8Tw4wJ7" target="_blank">Lihat Lokasi</a></p>
 
-    <div class="section">
-      <h2>Hadiah</h2>
-      <p>Silakan kunjungi daftar kado kami di link berikut:</p>
-      <a href="https://www.giftster.com/list/Z7Ogt/" target="_blank" class="button">Lihat Gift List</a>
-      <p>Atau kirim melalui QR berikut:</p>
-      <div class="qr">
-        <p>QR Code Fauzi</p>
-        <img src="qr-fauzi.png" alt="QR Code Fauzi">
-        <p>QR Code Liansky</p>
-        <img src="qr-liansky.png" alt="QR Code Liansky">
+        <h3>Resepsi Sesi 1</h3>
+        <p>10.00 – 12.00 WIB<br><strong>Rumah Fauzi - Jl. Contoh Alamat No. 123</strong></p>
+
+        <h3>Resepsi Sesi 2</h3>
+        <p>13.00 – 15.00 WIB<br><strong>Rumah Fauzi - Jl. Contoh Alamat No. 123</strong></p>
+
+        <p><strong>Catatan:</strong> Harap <em>lepas sepatu</em> sebelum memasuki area acara.</p>
       </div>
     </div>
   </div>
 
-  <!-- Firebase and countdown scripts remain unchanged -->
+  <div class="background-3">
+    <div class="container">
+      <div class="section">
+        <h2>Konfirmasi Kehadiran (RSVP)</h2>
+        <form id="rsvpForm">
+          <input type="text" id="rsvpNama" placeholder="Nama Anda" required>
+          <select id="rsvpStatus">
+            <option value="Hadir">Hadir</option>
+            <option value="Tidak Hadir">Tidak Hadir</option>
+          </select>
+          <input type="number" id="rsvpJumlah" placeholder="Jumlah Orang" required>
+          <button type="submit">Kirim</button>
+        </form>
+      </div>
+
+      <div class="section">
+        <h2>Ucapan & Doa</h2>
+        <form id="wishForm">
+          <input type="text" id="wishNama" placeholder="Nama Anda" required>
+          <textarea id="wishPesan" rows="3" placeholder="Ucapan dan Doa" required></textarea>
+          <button type="submit">Kirim</button>
+        </form>
+        <div id="wishList"></div>
+        <div id="pagination"></div>
+      </div>
+
+      <div class="section">
+        <h2>Hadiah</h2>
+        <p>Silakan kunjungi daftar kado kami di link berikut:</p>
+        <a href="https://www.giftster.com/list/Z7Ogt/" target="_blank" class="button">Lihat Gift List</a>
+        <p>Atau kirim melalui QR berikut:</p>
+        <div class="qr">
+          <p>QR Code Fauzi</p>
+          <img src="qr-fauzi.png" alt="QR Code Fauzi">
+          <p>QR Code Liansky</p>
+          <img src="qr-liansky.png" alt="QR Code Liansky">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const bgMusic = document.getElementById("bg-music");
+    const musicToggle = document.getElementById("music-toggle");
+    let isPlaying = true;
+    musicToggle.addEventListener("click", () => {
+      if (isPlaying) {
+        bgMusic.pause();
+        musicToggle.textContent = "🔇";
+      } else {
+        bgMusic.play();
+        musicToggle.textContent = "🔊";
+      }
+      isPlaying = !isPlaying;
+    });
+  </script>
 </body>
 </html>
