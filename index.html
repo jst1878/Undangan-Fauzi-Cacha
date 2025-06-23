@@ -63,6 +63,7 @@
       text-decoration: none;
       border-radius: 8px;
       font-size: 16px;
+      cursor: pointer;
     }
 
     .qr img {
@@ -71,12 +72,29 @@
       border-radius: 8px;
     }
 
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
     p {
       line-height: 1.6;
     }
 
     a {
       color: #0066cc;
+    }
+
+    #wish-list div, #rsvp-list p {
+      background: white;
+      padding: 12px;
+      border-radius: 8px;
+      margin: 8px 0;
+      box-shadow: 0 0 5px rgba(0,0,0,0.05);
     }
   </style>
 </head>
@@ -120,12 +138,28 @@
 
     <div class="section">
       <h2>Konfirmasi Kehadiran</h2>
-      <a class="button" href="https://forms.gle/contorsvp">Isi Formulir RSVP</a>
+      <form id="rsvp-form">
+        <input type="text" name="nama" placeholder="Nama Anda" required>
+        <select name="kehadiran" required>
+          <option value="">Pilih Kehadiran</option>
+          <option value="Hadir - Akad">Hadir - Akad</option>
+          <option value="Hadir - Resepsi 1">Hadir - Resepsi 1</option>
+          <option value="Hadir - Resepsi 2">Hadir - Resepsi 2</option>
+          <option value="Tidak Hadir">Tidak Hadir</option>
+        </select>
+        <button type="submit" class="button">Kirim Konfirmasi</button>
+      </form>
+      <div id="rsvp-list"></div>
     </div>
 
     <div class="section">
       <h2>Ucapan & Doa</h2>
-      <a class="button" href="https://forms.gle/ucapancontoh">Tulis Ucapan</a>
+      <form id="wish-form">
+        <input type="text" name="nama" placeholder="Nama Anda" required>
+        <textarea name="pesan" placeholder="Tulis ucapan dan doa..." required></textarea>
+        <button type="submit" class="button">Kirim Ucapan</button>
+      </form>
+      <div id="wish-list"></div>
     </div>
 
     <div class="section">
@@ -149,25 +183,50 @@
   </div>
 
   <script>
+    // Countdown ke akad
     const countdown = document.getElementById("countdown");
     const targetDate = new Date("July 27, 2025 07:00:00 GMT+0700").getTime();
-
     setInterval(() => {
       const now = new Date().getTime();
       const distance = targetDate - now;
-
       if (distance < 0) {
         countdown.innerHTML = "Hari ini adalah hari pernikahan kami 🎉";
         return;
       }
-
       const totalHours = Math.floor(distance / (1000 * 60 * 60));
       const weeks = Math.floor(totalHours / (24 * 7));
       const days = Math.floor((totalHours % (24 * 7)) / 24);
       const hours = totalHours % 24;
-
       countdown.innerHTML = `Menuju Akad: ${weeks} minggu ${days} hari ${hours} jam lagi`;
     }, 1000);
+
+    // Form RSVP
+    document.getElementById("rsvp-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const nama = this.nama.value.trim();
+      const kehadiran = this.kehadiran.value;
+      if (nama && kehadiran) {
+        const list = document.getElementById("rsvp-list");
+        const item = document.createElement("p");
+        item.textContent = `${nama} - ${kehadiran}`;
+        list.appendChild(item);
+        this.reset();
+      }
+    });
+
+    // Form Ucapan
+    document.getElementById("wish-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const nama = this.nama.value.trim();
+      const pesan = this.pesan.value.trim();
+      if (nama && pesan) {
+        const list = document.getElementById("wish-list");
+        const item = document.createElement("div");
+        item.innerHTML = `<strong>${nama}</strong><br>${pesan}`;
+        list.prepend(item);
+        this.reset();
+      }
+    });
   </script>
 </body>
 </html>
