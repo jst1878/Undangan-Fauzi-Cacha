@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Undangan Pernikahan Fauzi & Liansky</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f8f8f8;
+      color: #333;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      padding: 24px;
+      background: white;
+    }
+    h1, h2, h3 {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .countdown {
+      font-size: 24px;
+      text-align: center;
+      margin: 16px 0;
+    }
+    .section {
+      margin: 32px 0;
+    }
+    .photo {
+      text-align: center;
+    }
+    .photo img {
+      max-width: 100%;
+      border-radius: 12px;
+    }
+    .button {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin: 12px 0;
+      padding: 12px;
+      background: #444;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+    .qr {
+      text-align: center;
+    }
+    .qr img {
+      width: 200px;
+      margin: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Fauzi & Liansky</h1>
+    <h3>Pernikahan - 27 Juli 2025</h3>
+
+    <div class="countdown" id="countdown">Hitung mundur...</div>
+
+    <div class="section photo">
+      <img src="foto-berdua.jpg" alt="Fauzi & Liansky">
+    </div>
+
+    <div class="section">
+      <h2>Undangan</h2>
+      <p>Dengan penuh kebahagiaan, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu dalam acara pernikahan kami:</p>
+
+      <h3>Akad Nikah</h3>
+      <p>Minggu, 27 Juli 2025<br>07.00 – 09.00 WIB<br><strong>[Nama Lokasi Akad]</strong><br><a href="[LINK GOOGLE MAPS]" target="_blank">Lihat Lokasi</a></p>
+
+      <h3>Resepsi Sesi 1</h3>
+      <p>10.00 – 12.00 WIB<br><strong>[Nama Lokasi Resepsi]</strong></p>
+
+      <h3>Resepsi Sesi 2</h3>
+      <p>13.00 – 15.00 WIB<br><strong>[Nama Lokasi Resepsi]</strong></p>
+
+      <p><strong>Catatan:</strong> Harap <em>lepas sepatu</em> sebelum memasuki area acara.</p>
+    </div>
+
+    <div class="section">
+      <h2>Konfirmasi Kehadiran</h2>
+      <a class="button" href="[LINK RSVP]">Isi Formulir RSVP</a>
+    </div>
+
+    <div class="section">
+      <h2>Ucapan & Doa</h2>
+      <a class="button" href="[LINK UCAPAN]">Tulis Ucapan</a>
+    </div>
+
+    <div class="section">
+      <h2>Hadiah</h2>
+      <p>Silakan kunjungi daftar kado kami di link berikut:</p>
+      <a class="button" href="https://www.giftster.com/list/Z7Ogt/">Lihat Gift List</a>
+
+      <div class="qr">
+        <p>Atau kirim melalui QR berikut:</p>
+        <img src="qr-fauzi.png" alt="QR Fauzi">
+        <img src="qr-liansky.png" alt="QR Liansky">
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Terima Kasih</h2>
+      <p>Merupakan kehormatan bagi kami apabila Anda dapat hadir dan memberikan doa restu.</p>
+      <p>Salam hangat,</p>
+      <p><strong>Fauzi & Liansky</strong></p>
+    </div>
+  </div>
+
+  <script>
+    // Countdown ke Akad jam 07:00 WIB
+    const targetDate = new Date("2025-07-27T07:00:00+07:00").getTime();
+    const countdown = document.getElementById("countdown");
+    setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+      if (distance < 0) {
+        countdown.innerHTML = "Hari ini adalah hari pernikahan kami 🎉";
+        return;
+      }
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      countdown.innerHTML = `Menuju Akad: ${hours} jam ${minutes} menit lagi`;
+    }, 1000);
+  </script>
+</body>
+</html>
