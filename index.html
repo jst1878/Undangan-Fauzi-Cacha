@@ -92,14 +92,26 @@
     }
 
     .page-break {
-      height: 80px;
-      background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.85)), url('background-2.jpg') no-repeat center center fixed;
+      height: 60px;
+      background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.85));
+      background-size: cover;
+    }
+
+    .bg-2 {
+      background: url('background-2.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .bg-3 {
+      background: url('background-3.jpg') no-repeat center center fixed;
       background-size: cover;
     }
 
     input, textarea, select {
       display: block;
       width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
       margin: 8px 0;
       padding: 10px;
       border-radius: 6px;
@@ -117,11 +129,19 @@
   </style>
 </head>
 <body>
+  <audio autoplay loop hidden>
+    <source src="musik-latar.mp3" type="audio/mpeg">
+  </audio>
+
   <div class="container">
     <h1>Fauzi & Liansky</h1>
     <h3>Pernikahan - 27 Juli 2025</h3>
     <div class="countdown" id="countdown">Menghitung waktu...</div>
+  </div>
 
+  <div class="page-break"></div>
+
+  <div class="container bg-2">
     <div class="section photo">
       <img src="foto-berdua.jpg" alt="Fauzi & Liansky">
     </div>
@@ -145,149 +165,8 @@
 
   <div class="page-break"></div>
 
-  <div class="container">
-    <div class="section">
-      <h2>RSVP</h2>
-      <form id="rsvp-form">
-        <input type="text" id="rsvp-nama" placeholder="Nama Anda" required>
-        <select id="rsvp-kehadiran">
-          <option value="Hadir">Hadir</option>
-          <option value="Tidak Hadir">Tidak Hadir</option>
-        </select>
-        <input type="number" id="rsvp-pax" placeholder="Jumlah Orang" min="1">
-        <button type="submit">Kirim</button>
-      </form>
-    </div>
-
-    <div class="section">
-      <h2>Ucapan & Doa</h2>
-      <form id="wish-form">
-        <input type="text" id="nama" placeholder="Nama Anda" required>
-        <textarea id="pesan" placeholder="Ucapan dan Doa" required></textarea>
-        <button type="submit">Kirim</button>
-      </form>
-
-      <div id="wish-list"></div>
-
-      <div id="pagination" style="text-align:center;margin-top:20px;">
-        <button id="prev-btn" disabled>Sebelumnya</button>
-        <span id="page-indicator">Halaman 1</span>
-        <button id="next-btn">Berikutnya</button>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>Hadiah</h2>
-      <p>Silakan kunjungi daftar kado kami di link berikut:</p>
-      <a class="button" href="https://www.giftster.com/list/Z7Ogt/">Lihat Gift List</a>
-      <div class="qr">
-        <p>Atau kirim melalui QR berikut:</p>
-        <img src="qr-fauzi.png" alt="QR Code Fauzi">
-        <img src="qr-liansky.png" alt="QR Code Liansky">
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>Terima Kasih</h2>
-      <p>Merupakan kehormatan bagi kami apabila Anda dapat hadir dan memberikan doa restu.</p>
-      <p>Salam hangat,</p>
-      <p><strong>Fauzi & Liansky</strong></p>
-    </div>
+  <div class="container bg-3">
+    <!-- RSVP dan Ucapan ditambahkan di bagian ini nantinya -->
   </div>
-
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyD_XJTed1xlR885PImafVa5dRXlaDtkT4M",
-      authDomain: "fauzi-cacha.firebaseapp.com",
-      databaseURL: "https://fauzi-cacha-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "fauzi-cacha",
-      storageBucket: "fauzi-cacha.appspot.com",
-      messagingSenderId: "215870485063",
-      appId: "1:215870485063:web:0af6f750fd09113e4ef762"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-
-    const wishForm = document.getElementById('wish-form');
-    const wishList = document.getElementById('wish-list');
-    const namaInput = document.getElementById('nama');
-    const pesanInput = document.getElementById('pesan');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-    const pageIndicator = document.getElementById('page-indicator');
-
-    const rsvpForm = document.getElementById('rsvp-form');
-    const rsvpNama = document.getElementById('rsvp-nama');
-    const rsvpKehadiran = document.getElementById('rsvp-kehadiran');
-    const rsvpPax = document.getElementById('rsvp-pax');
-
-    let wishes = [];
-    let currentPage = 1;
-    const itemsPerPage = 10;
-
-    wishForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const wish = {
-        nama: namaInput.value,
-        pesan: pesanInput.value
-      };
-      db.ref('wishes').push(wish);
-      namaInput.value = '';
-      pesanInput.value = '';
-    });
-
-    rsvpForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const data = {
-        nama: rsvpNama.value,
-        kehadiran: rsvpKehadiran.value,
-        pax: rsvpPax.value
-      };
-      db.ref('rsvp').push(data);
-      rsvpNama.value = '';
-      rsvpKehadiran.value = 'Hadir';
-      rsvpPax.value = '';
-      alert('Terima kasih atas konfirmasi kehadirannya!');
-    });
-
-    db.ref('wishes').on('value', (snapshot) => {
-      wishes = [];
-      snapshot.forEach(child => {
-        wishes.push(child.val());
-      });
-      renderPage(currentPage);
-    });
-
-    function renderPage(page) {
-      wishList.innerHTML = '';
-      const start = (page - 1) * itemsPerPage;
-      const end = start + itemsPerPage;
-      const pageItems = wishes.slice(start, end);
-      pageItems.forEach(wish => {
-        const div = document.createElement('div');
-        div.className = 'entry';
-        div.innerHTML = `<strong>${wish.nama}</strong><br>${wish.pesan}`;
-        wishList.appendChild(div);
-      });
-
-      pageIndicator.textContent = `Halaman ${page}`;
-      prevBtn.disabled = page === 1;
-      nextBtn.disabled = end >= wishes.length;
-    }
-
-    prevBtn.onclick = () => {
-      if (currentPage > 1) {
-        currentPage--;
-        renderPage(currentPage);
-      }
-    };
-
-    nextBtn.onclick = () => {
-      if (currentPage * itemsPerPage < wishes.length) {
-        currentPage++;
-        renderPage(currentPage);
-      }
-    };
-  </script>
 </body>
 </html>
