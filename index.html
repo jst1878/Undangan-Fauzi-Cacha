@@ -16,10 +16,11 @@
     }
 
     .background-1, .background-2, .background-3 {
-      background-size: cover;
+      background-size: contain;
       background-position: center center;
       background-attachment: scroll;
       background-repeat: no-repeat;
+      background-color: #fff;
     }
 
     .background-1 {
@@ -157,10 +158,6 @@
 
   <div class="background-2">
     <div class="container">
-      <div class="section photo">
-        <img src="foto-berdua.jpg" alt="Fauzi & Liansky">
-      </div>
-
       <div class="section">
         <h2>Undangan</h2>
         <p>Dengan penuh kebahagiaan, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dalam acara pernikahan kami:</p>
@@ -234,6 +231,19 @@
       }
       isPlaying = !isPlaying;
     });
+
+    // Countdown Timer
+    const targetDate = new Date("2025-07-27T00:00:00+07:00").getTime();
+    const countdownElement = document.getElementById("countdown");
+    setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      countdownElement.textContent = `${days} hari ${hours} jam ${minutes} menit ${seconds} detik`;
+    }, 1000);
   </script>
 </body>
 </html>
