@@ -17,20 +17,21 @@
 
     .background-1, .background-2, .background-3 {
       background-size: cover;
-      background-position: center top;
-      background-attachment: scroll;
+      background-position: top center;
       background-repeat: no-repeat;
-      background-color: #fff;
+      padding-top: 24px;
+      padding-bottom: 24px;
     }
-
     .background-1 {
       background-image: url('background-1.jpg');
     }
     .background-2 {
       background-image: url('background-2.jpg');
+      margin-top: 24px;
     }
     .background-3 {
       background-image: url('background-3.jpg');
+      margin-top: 24px;
     }
 
     .container {
@@ -39,7 +40,6 @@
       padding: 24px;
       background: rgba(255, 255, 255, 0.6);
       border-radius: 16px;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
     }
 
     h1, h2, h3 {
@@ -60,7 +60,6 @@
     }
     .dynamic-title .amp {
       font-size: 52px;
-      line-height: 1;
     }
 
     .countdown {
@@ -99,36 +98,13 @@
     .qr img {
       width: 180px;
       margin: 10px;
-      border-radius: 8px;
-    }
-
-    p {
-      line-height: 1.6;
-    }
-
-    a {
-      color: #0066cc;
-    }
-
-    .entry {
-      background: #f7f7f7;
-      padding: 12px;
-      margin: 8px 0;
-      border-radius: 8px;
-    }
-
-    #pagination button {
-      margin: 8px;
-      padding: 8px 16px;
-      font-size: 14px;
     }
 
     input, textarea, select {
       display: block;
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
-      margin: 8px 0;
+      width: 90%;
+      max-width: 500px;
+      margin: 8px auto;
       padding: 10px;
       border-radius: 6px;
       border: 1px solid #ccc;
@@ -141,6 +117,19 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
+      display: block;
+      margin: 10px auto;
+    }
+
+    .entry {
+      background: #f7f7f7;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     #music-toggle {
@@ -154,6 +143,14 @@
       width: 40px;
       height: 40px;
       font-size: 18px;
+      cursor: pointer;
+    }
+
+    #pagination button {
+      margin: 4px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
       cursor: pointer;
     }
   </style>
@@ -181,16 +178,12 @@
       <div class="section">
         <h2>Undangan</h2>
         <p>Dengan penuh kebahagiaan, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dalam acara pernikahan kami:</p>
-
         <h3>Akad Nikah</h3>
         <p>Minggu, 27 Juli 2025<br>07.00 – 09.00 WIB<br><strong>Masjid Baiturrahman Pondok Pinang</strong><br><a href="https://maps.app.goo.gl/BbcKU5Lmzu8Tw4wJ7" target="_blank">Lihat Lokasi</a></p>
-
         <h3>Resepsi Sesi 1</h3>
         <p>10.00 – 12.00 WIB<br><strong>Rumah Fauzi - Jl. Contoh Alamat No. 123</strong></p>
-
         <h3>Resepsi Sesi 2</h3>
         <p>13.00 – 15.00 WIB<br><strong>Rumah Fauzi - Jl. Contoh Alamat No. 123</strong></p>
-
         <p><strong>Catatan:</strong> Harap <em>lepas sepatu</em> sebelum memasuki area acara.</p>
       </div>
     </div>
@@ -226,7 +219,6 @@
         <h2>Hadiah</h2>
         <p>Silakan kunjungi daftar kado kami di link berikut:</p>
         <a href="https://www.giftster.com/list/Z7Ogt/" target="_blank" class="button">Lihat Gift List</a>
-        <p>Atau kirim melalui QR berikut:</p>
         <div class="qr">
           <p>QR Code Fauzi</p>
           <img src="qr-fauzi.png" alt="QR Code Fauzi">
@@ -238,6 +230,67 @@
   </div>
 
   <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyD_XJTed1xlR885PImafVa5dRXlaDtkT4M",
+      authDomain: "fauzi-cacha.firebaseapp.com",
+      databaseURL: "https://fauzi-cacha-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "fauzi-cacha",
+      storageBucket: "fauzi-cacha.appspot.com",
+      messagingSenderId: "215870485063",
+      appId: "1:215870485063:web:0af6f750fd09113e4ef762",
+      measurementId: "G-8J1TKRWZV9"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    document.getElementById("wishForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const nama = document.getElementById("wishNama").value;
+      const pesan = document.getElementById("wishPesan").value;
+      db.ref("ucapan").push({ nama, pesan });
+      document.getElementById("wishForm").reset();
+    });
+
+    function loadWishes(page = 1) {
+      const wishList = document.getElementById("wishList");
+      const pagination = document.getElementById("pagination");
+      db.ref("ucapan").once("value", function(snapshot) {
+        const data = [];
+        snapshot.forEach(child => {
+          data.push(child.val());
+        });
+        data.reverse();
+        const perPage = 10;
+        const totalPages = Math.ceil(data.length / perPage);
+        const start = (page - 1) * perPage;
+        const end = start + perPage;
+        wishList.innerHTML = "";
+        data.slice(start, end).forEach(entry => {
+          const div = document.createElement("div");
+          div.className = "entry";
+          div.innerHTML = `<strong>${entry.nama}</strong><br>${entry.pesan}`;
+          wishList.appendChild(div);
+        });
+        pagination.innerHTML = "";
+        for (let i = 1; i <= totalPages; i++) {
+          const btn = document.createElement("button");
+          btn.textContent = i;
+          btn.onclick = () => loadWishes(i);
+          pagination.appendChild(btn);
+        }
+      });
+    }
+    loadWishes();
+
+    document.getElementById("rsvpForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const nama = document.getElementById("rsvpNama").value;
+      const status = document.getElementById("rsvpStatus").value;
+      const jumlah = document.getElementById("rsvpJumlah").value;
+      db.ref("rsvp").push({ nama, status, jumlah });
+      document.getElementById("rsvpForm").reset();
+    });
+
     const bgMusic = document.getElementById("bg-music");
     const musicToggle = document.getElementById("music-toggle");
     let isPlaying = true;
