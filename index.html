@@ -6,153 +6,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-      color: #333;
-      background: #fff;
-    }
-
-    .background-1, .background-2, .background-3 {
-      background-size: cover;
-      background-position: top center;
-      background-repeat: no-repeat;
-      padding-top: 24px;
-      padding-bottom: 24px;
-    }
-    .background-1 {
-      background-image: url('background-1.jpg');
-    }
-    .background-2 {
-      background-image: url('background-2.jpg');
-      margin-top: 24px;
-    }
-    .background-3 {
-      background-image: url('background-3.jpg');
-      margin-top: 24px;
-    }
-
-    .container {
-      max-width: 700px;
-      margin: auto;
-      padding: 24px;
-      background: rgba(255, 255, 255, 0.6);
-      border-radius: 16px;
-    }
-
-    h1, h2, h3 {
-      text-align: center;
-      margin-bottom: 8px;
-    }
-
-    .dynamic-title {
-      font-size: 32px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .dynamic-title span {
-      font-weight: 600;
-    }
-    .dynamic-title .amp {
-      font-size: 52px;
-    }
-
-    .countdown {
-      font-size: 20px;
-      text-align: center;
-      margin: 16px 0;
-      font-weight: bold;
-    }
-
-    .section {
-      margin: 32px 0;
-    }
-
-    .photo, .qr {
-      text-align: center;
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 12px;
-    }
-
-    .button {
-      display: block;
-      width: fit-content;
-      margin: 12px auto;
-      padding: 14px 24px;
-      background: #444;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-
-    .qr img {
-      width: 180px;
-      margin: 10px;
-    }
-
-    input, textarea, select {
-      display: block;
-      width: 90%;
-      max-width: 500px;
-      margin: 8px auto;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-
-    button[type="submit"] {
-      padding: 10px 20px;
-      background-color: #444;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      display: block;
-      margin: 10px auto;
-    }
-
-    .entry {
-      background: #f7f7f7;
-      padding: 12px;
-      margin: 8px 0;
-      border-radius: 8px;
-      width: 90%;
-      max-width: 600px;
+    body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; color: #333; background: #fff; }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; text-align: center; }
+    .container, .container p, .container div, .container form, .container ul, .container li { text-align: center; }
+    input, textarea, select, button, #pagination button {
+      text-align: left;
       margin-left: auto;
       margin-right: auto;
     }
-
-    #music-toggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1000;
-      background: rgba(255,255,255,0.7);
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      font-size: 18px;
-      cursor: pointer;
+    .background-1, .background-2, .background-3 {
+      background-size: cover; background-position: center top; background-repeat: no-repeat; padding: 24px 0;
     }
-
-    #pagination button {
-      margin: 4px;
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      cursor: pointer;
-    }
+    .background-1 { background-image: url('background-1.jpg'); }
+    .background-2 { background-image: url('background-2.jpg'); margin-top: 24px; }
+    .background-3 { background-image: url('background-3.jpg'); margin-top: 24px; }
+    .container { max-width: 700px; margin: auto; padding: 24px; background: rgba(255, 255, 255, 0.6); border-radius: 16px; }
+    .dynamic-title { font-family: 'Playfair Display', serif; font-size: 32px; display: flex; flex-direction: column; align-items: center; }
+    .dynamic-title .amp { font-size: 24px; }
+    .countdown { font-size: 20px; text-align: center; margin: 16px 0; font-weight: bold; }
+    .button, button[type="submit"] { display: block; margin: 12px auto; padding: 14px 24px; background: #444; color: white; border-radius: 8px; border: none; cursor: pointer; }
+    input, textarea, select { display: block; width: 90%; max-width: 500px; margin: 8px auto; padding: 10px; border-radius: 6px; border: 1px solid #ccc; }
+    #music-toggle { position: fixed; bottom: 20px; right: 20px; z-index: 1000; background: rgba(255,255,255,0.7); border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 18px; cursor: pointer; }
+    #pagination button { margin: 4px; padding: 6px 12px; border-radius: 6px; border: 1px solid #ccc; cursor: pointer; }
+    .entry { background: #f7f7f7; padding: 12px; margin: 8px auto; border-radius: 8px; width: 90%; max-width: 600px; }
+    .spacer { height: 24px; }
+    .bride-groom-block { text-align: center; margin-bottom: 16px; }
+    .bride-groom-block img { width: 160px; height: 160px; object-fit: cover; border-radius: 50%; margin-bottom: 8px; }
   </style>
 </head>
 <body>
@@ -161,71 +42,76 @@
   </audio>
   <button id="music-toggle">🔊</button>
 
+  <!-- Background 1 -->
   <div class="background-1">
     <div class="container">
-      <h1 class="dynamic-title">
-        <span>Fauzi</span>
-        <span class="amp">&</span>
-        <span>Liansky</span>
-      </h1>
+      <h1 class="dynamic-title"><span>Fauzi</span><span class="amp">&</span><span>Liansky</span></h1>
       <h3>Pernikahan - 27 Juli 2025</h3>
       <div class="countdown" id="countdown">Menghitung waktu...</div>
     </div>
-  </div>
-
-  <div class="background-2">
+    <div class="spacer"></div>
     <div class="container">
-      <div class="section">
-        <h2>Undangan</h2>
-        <p>Dengan penuh kebahagiaan, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dalam acara pernikahan kami:</p>
-        <h3>Akad Nikah</h3>
-        <p>Minggu, 27 Juli 2025<br>07.00 – 09.00 WIB<br><strong>Masjid Baiturrahman Pondok Pinang</strong><br><a href="https://maps.app.goo.gl/BbcKU5Lmzu8Tw4wJ7" target="_blank">Lihat Lokasi</a></p>
-        <h3>Resepsi Sesi 1</h3>
-        <p>10.00 – 12.00 WIB<br><strong>Rumah Fauzi - Jl. Contoh Alamat No. 123</strong></p>
-        <h3>Resepsi Sesi 2</h3>
-        <p>13.00 – 15.00 WIB<br><strong>Rumah Fauzi - Jl. Contoh Alamat No. 123</strong></p>
-        <p><strong>Catatan:</strong> Harap <em>lepas sepatu</em> sebelum memasuki area acara.</p>
+      <h2>Bride & Groom</h2>
+      <div class="bride-groom-block">
+        <img src="ff.png" alt="Fauzi">
+        <h3>Fauzi</h3>
+      </div>
+      <div class="bride-groom-block">
+        <img src="cc.png" alt="Liansky">
+        <h3>Liansky</h3>
       </div>
     </div>
   </div>
 
+  <!-- Background 2 -->
+  <div class="background-2">
+    <div class="container">
+      <h2>Undangan</h2>
+      <p>Dengan penuh kebahagiaan, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dalam acara pernikahan kami:</p>
+      <h3>Akad Nikah</h3>
+      <p>27 Juli 2025 | 07.00 – 09.00 WIB | Masjid Baiturrahman Pondok Pinang <a href="https://maps.app.goo.gl/BbcKU5Lmzu8Tw4wJ7" target="_blank">Lihat Lokasi</a></p>
+      <h3>Resepsi Sesi 1</h3>
+      <p>10.00 – 12.00 WIB | Rumah Fauzi - Jl. Contoh Alamat No.123</p>
+      <h3>Resepsi Sesi 2</h3>
+      <p>13.00 – 15.00 WIB | Rumah Fauzi - Jl. Contoh Alamat No.123</p>
+      <p><strong>Catatan:</strong> Harap lepas sepatu sebelum memasuki area acara.</p>
+    </div>
+  </div>
+
+  <!-- Background 3 -->
   <div class="background-3">
     <div class="container">
-      <div class="section">
-        <h2>Konfirmasi Kehadiran (RSVP)</h2>
-        <form id="rsvpForm">
-          <input type="text" id="rsvpNama" placeholder="Nama Anda" required>
-          <select id="rsvpStatus">
-            <option value="Hadir">Hadir</option>
-            <option value="Tidak Hadir">Tidak Hadir</option>
-          </select>
-          <input type="number" id="rsvpJumlah" placeholder="Jumlah Orang" required>
-          <button type="submit">Kirim</button>
-        </form>
+      <h2>Konfirmasi Kehadiran (RSVP)</h2>
+      <form id="rsvpForm">
+        <input type="text" id="rsvpNama" placeholder="Nama Anda" required>
+        <select id="rsvpStatus">
+          <option value="Hadir">Hadir</option>
+          <option value="Tidak Hadir">Tidak Hadir</option>
+        </select>
+        <input type="number" id="rsvpJumlah" placeholder="Jumlah Orang" required>
+        <button type="submit">Kirim</button>
+      </form>
+
+      <h2>Ucapan & Doa</h2>
+      <form id="wishForm">
+        <input type="text" id="wishNama" placeholder="Nama Anda" required>
+        <textarea id="wishPesan" rows="3" placeholder="Ucapan dan Doa" required></textarea>
+        <button type="submit">Kirim</button>
+      </form>
+      <div id="wishList"></div>
+      <div id="pagination"></div>
+
+      <h2>Hadiah</h2>
+      <a href="https://www.giftster.com/list/Z7Ogt/" target="_blank" class="button">Lihat Gift List</a>
+      <div class="qr">
+        <p>QR Code Fauzi</p>
+        <img src="qr-fauzi.png" alt="QR Code Fauzi">
+        <p>QR Code Liansky</p>
+        <img src="qr-liansky.png" alt="QR Code Liansky">
       </div>
 
-      <div class="section">
-        <h2>Ucapan & Doa</h2>
-        <form id="wishForm">
-          <input type="text" id="wishNama" placeholder="Nama Anda" required>
-          <textarea id="wishPesan" rows="3" placeholder="Ucapan dan Doa" required></textarea>
-          <button type="submit">Kirim</button>
-        </form>
-        <div id="wishList"></div>
-        <div id="pagination"></div>
-      </div>
-
-      <div class="section">
-        <h2>Hadiah</h2>
-        <p>Silakan kunjungi daftar kado kami di link berikut:</p>
-        <a href="https://www.giftster.com/list/Z7Ogt/" target="_blank" class="button">Lihat Gift List</a>
-        <div class="qr">
-          <p>QR Code Fauzi</p>
-          <img src="qr-fauzi.png" alt="QR Code Fauzi">
-          <p>QR Code Liansky</p>
-          <img src="qr-liansky.png" alt="QR Code Liansky">
-        </div>
-      </div>
+      <h2>Galeri Instagram</h2>
+      <iframe src="https://snapwidget.com/embed/1100649" class="snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:100%; height:510px;" title="Instagram Gallery"></iframe>
     </div>
   </div>
 
@@ -237,84 +123,97 @@
       projectId: "fauzi-cacha",
       storageBucket: "fauzi-cacha.appspot.com",
       messagingSenderId: "215870485063",
-      appId: "1:215870485063:web:0af6f750fd09113e4ef762",
-      measurementId: "G-8J1TKRWZV9"
+      appId: "1:215870485063:web:0af6f750fd09113e4ef762"
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    document.getElementById("wishForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const nama = document.getElementById("wishNama").value;
-      const pesan = document.getElementById("wishPesan").value;
-      db.ref("ucapan").push({ nama, pesan });
-      document.getElementById("wishForm").reset();
-    });
-
-    function loadWishes(page = 1) {
-      const wishList = document.getElementById("wishList");
-      const pagination = document.getElementById("pagination");
-      db.ref("ucapan").once("value", function(snapshot) {
-        const data = [];
-        snapshot.forEach(child => {
-          data.push(child.val());
-        });
-        data.reverse();
-        const perPage = 10;
-        const totalPages = Math.ceil(data.length / perPage);
-        const start = (page - 1) * perPage;
-        const end = start + perPage;
-        wishList.innerHTML = "";
-        data.slice(start, end).forEach(entry => {
-          const div = document.createElement("div");
-          div.className = "entry";
-          div.innerHTML = `<strong>${entry.nama}</strong><br>${entry.pesan}`;
-          wishList.appendChild(div);
-        });
-        pagination.innerHTML = "";
-        for (let i = 1; i <= totalPages; i++) {
-          const btn = document.createElement("button");
-          btn.textContent = i;
-          btn.onclick = () => loadWishes(i);
-          pagination.appendChild(btn);
-        }
-      });
-    }
-    loadWishes();
-
-    document.getElementById("rsvpForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const nama = document.getElementById("rsvpNama").value;
-      const status = document.getElementById("rsvpStatus").value;
-      const jumlah = document.getElementById("rsvpJumlah").value;
-      db.ref("rsvp").push({ nama, status, jumlah });
-      document.getElementById("rsvpForm").reset();
-    });
-
-    const bgMusic = document.getElementById("bg-music");
-    const musicToggle = document.getElementById("music-toggle");
-    let isPlaying = true;
-    musicToggle.addEventListener("click", () => {
-      if (isPlaying) {
-        bgMusic.pause();
-        musicToggle.textContent = "🔇";
-      } else {
-        bgMusic.play();
-        musicToggle.textContent = "🔊";
-      }
-      isPlaying = !isPlaying;
-    });
-
-    const targetDate = new Date("2025-07-27T00:00:00+07:00").getTime();
-    const countdownElement = document.getElementById("countdown");
+    const countdown = document.getElementById("countdown");
+    const targetDate = new Date("July 27, 2025 07:00:00 GMT+0700").getTime();
     setInterval(() => {
       const now = new Date().getTime();
       const distance = targetDate - now;
-      const weeks = Math.floor(distance / (1000 * 60 * 60 * 24 * 7));
-      const days = Math.floor((distance % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      countdownElement.textContent = `${weeks} minggu ${days} hari ${hours} jam`;
+      if (distance < 0) {
+        countdown.innerHTML = "Hari ini adalah hari pernikahan kami 🎉";
+        return;
+      }
+      const totalHours = Math.floor(distance / (1000 * 60 * 60));
+      const weeks = Math.floor(totalHours / (24 * 7));
+      const days = Math.floor((totalHours % (24 * 7)) / 24);
+      const hours = totalHours % 24;
+      countdown.innerHTML = `Menuju Akad: ${weeks} minggu ${days} hari ${hours} jam lagi`;
     }, 1000);
+
+    const bgMusic = document.getElementById("bg-music");
+    document.getElementById("music-toggle").addEventListener("click", () => {
+      if (bgMusic.paused) {
+        bgMusic.play();
+      } else {
+        bgMusic.pause();
+      }
+    });
+
+    document.getElementById("rsvpForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      db.ref('rsvp').push({
+        nama: document.getElementById("rsvpNama").value,
+        status: document.getElementById("rsvpStatus").value,
+        jumlah: document.getElementById("rsvpJumlah").value
+      });
+      e.target.reset();
+      alert("Terima kasih atas konfirmasinya!");
+    });
+
+    document.getElementById("wishForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      db.ref('wishes').push({
+        nama: document.getElementById("wishNama").value,
+        pesan: document.getElementById("wishPesan").value
+      });
+      e.target.reset();
+      loadWishes(currentPage);
+    });
+
+    const wishList = document.getElementById("wishList");
+    const pagination = document.getElementById("pagination");
+    let wishes = [];
+    let currentPage = 1;
+    const wishesPerPage = 10;
+
+    function loadWishes(page) {
+      db.ref('wishes').once('value', (snapshot) => {
+        wishes = [];
+        snapshot.forEach(child => {
+          wishes.push(child.val());
+        });
+        wishes.reverse();
+        displayWishes(page);
+      });
+    }
+
+    function displayWishes(page) {
+      wishList.innerHTML = "";
+      pagination.innerHTML = "";
+      const start = (page - 1) * wishesPerPage;
+      const pagedWishes = wishes.slice(start, start + wishesPerPage);
+      pagedWishes.forEach(entry => {
+        const div = document.createElement("div");
+        div.className = "entry";
+        div.innerHTML = `<strong>${entry.nama}</strong><br>${entry.pesan}`;
+        wishList.appendChild(div);
+      });
+      const totalPages = Math.ceil(wishes.length / wishesPerPage);
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.textContent = i;
+        btn.onclick = () => {
+          currentPage = i;
+          displayWishes(i);
+        };
+        pagination.appendChild(btn);
+      }
+    }
+    loadWishes(currentPage);
   </script>
 </body>
 </html>
