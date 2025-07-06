@@ -204,7 +204,7 @@ if (guestName) {
 
     document.getElementById("rsvpForm").addEventListener("submit", (e) => {
       e.preventDefault();
-      db.ref('SESI 1').push({
+      db.ref('SESI 2').push({
         nama: document.getElementById("rsvpNama").value,
         status: document.getElementById("rsvpStatus").value,
         jumlah: document.getElementById("rsvpJumlah").value
