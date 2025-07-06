@@ -47,9 +47,10 @@
   <button id="music-toggle">🔊</button>
   <p style="text-align:center; font-size: 14px; color: #666; margin-top: 8px;">Ketuk tombol 🔊 di pojok kanan bawah untuk memutar musik</p>
 
-<div id="guest-name" class="container"></div>
 
   <!-- Background 1 -->
+  <div id="guest-name" class="container"></div>
+
   <div class="background-1">
     <div class="container">
       <h1 class="dynamic-title">
@@ -162,7 +163,7 @@
 
 const guestName = getQueryParam("to");
 if (guestName) {
-  document.getElementById("guest-name").innerHTML = `<p>Kepada Yth. <strong>${decodeURIComponent(guestName)}</strong></p>`;
+  document.getElementById("guest-name").innerHTML = `<p>Teruntuk <strong>${decodeURIComponent(guestName)}</strong> Dalam suka cita kami</p>`;
 }
 
     const firebaseConfig = {
