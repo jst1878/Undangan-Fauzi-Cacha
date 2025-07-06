@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Undangan Pernikahan Fauzi & Liansky</title>
+  <title>Undangan Pernikahan Liansky & Fauzi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
@@ -10,6 +10,7 @@
   <style>
     body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; color: #333; background: #fff; }
     h1, h2, h3 { font-family: 'Playfair Display', serif; text-align: center; }
+ 
     .container, .container p, .container div, .container form, .container ul, .container li { text-align: center; }
     input, textarea, select, button, #pagination button {
       text-align: left;
@@ -23,7 +24,7 @@
     .background-2 { background-image: url('background-2.jpg'); margin-top: 24px; }
     .background-3 { background-image: url('background-3.jpg'); margin-top: 24px; }
     .container { max-width: 700px; margin: auto; padding: 24px; background: rgba(255, 255, 255, 0.6); border-radius: 16px; }
-    .dynamic-title { font-family: 'Playfair Display', serif; font-size: 32px; display: flex; flex-direction: column; align-items: center; }
+    .dynamic-title { font-family: 'Playfair Display', serif; font-size: 36px; display: flex; flex-direction: column; align-items: center; }
     .dynamic-title .amp { font-size: 24px; }
     .countdown { font-size: 20px; text-align: center; margin: 16px 0; font-weight: bold; }
     .button, button[type="submit"] { display: block; margin: 12px auto; padding: 14px 24px; background: #444; color: white; border-radius: 8px; border: none; cursor: pointer; }
@@ -31,8 +32,11 @@
     #music-toggle { position: fixed; bottom: 20px; right: 20px; z-index: 1000; background: rgba(255,255,255,0.7); border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 18px; cursor: pointer; }
     #pagination button { margin: 4px; padding: 6px 12px; border-radius: 6px; border: 1px solid #ccc; cursor: pointer; }
     .entry { background: #f7f7f7; padding: 12px; margin: 8px auto; border-radius: 8px; width: 90%; max-width: 600px; }
-    .spacer { height: 24px; }
-    .bride-groom-block { text-align: center; margin-bottom: 16px; }
+    .spacer { height: 12px; }
+    .spacer-sm { height: 12px; }
+    .spacer-md { height: 24px; }
+    .spacer-lg { height: 48px; }
+    .bride-groom-block { text-align: center; margin-bottom: 8px; }
     .bride-groom-block img { width: 160px; height: 160px; object-fit: cover; border-radius: 50%; margin-bottom: 8px; }
   </style>
 </head>
@@ -41,24 +45,35 @@
     <source src="musik-latar.mp3" type="audio/mpeg">
   </audio>
   <button id="music-toggle">🔊</button>
+  <p style="text-align:center; font-size: 14px; color: #666; margin-top: 8px;">Ketuk tombol 🔊 di pojok kanan bawah untuk memutar musik</p>
+
+<div id="guest-name" class="container"></div>
 
   <!-- Background 1 -->
   <div class="background-1">
     <div class="container">
-      <h1 class="dynamic-title"><span>Fauzi</span><span class="amp">&</span><span>Liansky</span></h1>
+      <h1 class="dynamic-title">
+        <span style="font-size: 36px; font-weight: bold;">Liansky</span>
+        <span class="amp" style="font-size: 20px;">&</span>
+        <span style="font-size: 36px; font-weight: bold;">Fauzi</span>
+      </h1>
       <h3>Pernikahan - 27 Juli 2025</h3>
-      <div class="countdown" id="countdown">Menghitung waktu...</div>
+      <div class="countdown" id="countdown" style="font-weight:bold;">Menghitung waktu...</div>
     </div>
     <div class="spacer"></div>
     <div class="container">
-      <h2>Bride & Groom</h2>
+      <strong><h2>Kawula Penganten</h2></strong>
       <div class="bride-groom-block">
-        <img src="ff.png" alt="Fauzi">
-        <h3>Fauzi</h3>
+        <img src="cc.png" alt="Fauzi">
+        <h3>Salsabila Liansky Shania Putri, S.I.Kom</h3>
+        <p>Putri pertama dari Bapak Ir. Ecky Mohammad Ridwan Baso 
+          & Ibu Aprilia Muslimah Istuarti</p>
       </div>
       <div class="bride-groom-block">
-        <img src="cc.png" alt="Liansky">
-        <h3>Liansky</h3>
+        <img src="ff.png" alt="Liansky">
+        <h3>Fauzi, S.Ars.L</h3>
+        <p>Putra pertama dari Alm. Bapak Syafrudin
+          & Ibu Rumiyati</p>
       </div>
     </div>
   </div>
@@ -66,33 +81,51 @@
   <!-- Background 2 -->
   <div class="background-2">
     <div class="container">
-      <h2>Undangan</h2>
+      <strong><h2>Undangan</h2></strong>
       <p>Dengan penuh kebahagiaan, kami mengundang Bapak/Ibu/Saudara/i untuk hadir dalam acara pernikahan kami:</p>
       <h3>Akad Nikah</h3>
-      <p>27 Juli 2025 | 07.00 – 09.00 WIB | Masjid Baiturrahman Pondok Pinang <a href="https://maps.app.goo.gl/BbcKU5Lmzu8Tw4wJ7" target="_blank">Lihat Lokasi</a></p>
-      <h3>Resepsi Sesi 1</h3>
-      <p>10.00 – 12.00 WIB | Rumah Fauzi - Jl. Contoh Alamat No.123</p>
-      <h3>Resepsi Sesi 2</h3>
-      <p>13.00 – 15.00 WIB | Rumah Fauzi - Jl. Contoh Alamat No.123</p>
-      <p><strong>Catatan:</strong> Harap lepas sepatu sebelum memasuki area acara.</p>
+      <p>📅 Minggu 27 Juli 2025</p>
+       <p>⏰ 07.30 - 10.00 WIB</p>
+      <p>Masjid Baiturrahman Pondok Pinang.
+        Kec. Kby. Lama, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta
+        <a href="https://maps.app.goo.gl/BbcKU5Lmzu8Tw4wJ7" target="_blank">Lihat Lokasi</a></p>
+        <div class="spacer-sm"></div>
+
+      <strong><h3>Syukuran Pernikahan</h3></strong>
+    <p>📅 Minggu 27 Juli 2025</p>
+       <p>⏰ 10.30 - 12.00 WIB</p>
+      <p>Aula Masjid Baiturrahman Pondok Pinang.
+        Kec. Kby. Lama, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta
+       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.4245398940833!2d106.779469!3d-6.207604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f176b68bdeff%3A0x8e99b65e82d9fbe!2sMasjid%20Baiturrahman%20Pondok%20Pinang!5e0!3m2!1sen!2sid!4v1719392000000!5m2!1sen!2sid" width="100%" height="300" style="border:0; border-radius:12px; margin-top:12px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <div class="spacer"></div>
+      <div class="container">
+     <h2>Tata Sandhang</h2>
+      <p>Acara syukuran akan diselenggarakan di Aula Masjid berbatas suci. Dengan penuh hormat, kami mohon kesediaan para undangan untuk melepas alas kaki dan menyimpannya di loker yang tersedia sebelum memasuki area masjid.
+</p>
+        <p>Kami juga mengimbau untuk mengenakan pakaian yang nyaman dan sopan serta alas kaki yang mudah dilepas dan disimpan. Terima kasih atas pengertiannya.</p>
     </div>
   </div>
 
   <!-- Background 3 -->
   <div class="background-3">
     <div class="container">
-      <h2>Konfirmasi Kehadiran (RSVP)</h2>
+      <strong><h2>Konfirmasi Kehadiran (RSVP)</h2></strong>
       <form id="rsvpForm">
         <input type="text" id="rsvpNama" placeholder="Nama Anda" required>
         <select id="rsvpStatus">
           <option value="Hadir">Hadir</option>
           <option value="Tidak Hadir">Tidak Hadir</option>
         </select>
-        <input type="number" id="rsvpJumlah" placeholder="Jumlah Orang" required>
+<select id="rsvpJumlah" required>
+  <option value="" disabled selected>Jumlah Orang</option>
+  <option value="1">1 Orang</option>
+  <option value="2">2 Orang</option>
+</select>
         <button type="submit">Kirim</button>
       </form>
 
-      <h2>Ucapan & Doa</h2>
+      <strong><h2>Ucapan & Doa</h2></strong>
       <form id="wishForm">
         <input type="text" id="wishNama" placeholder="Nama Anda" required>
         <textarea id="wishPesan" rows="3" placeholder="Ucapan dan Doa" required></textarea>
@@ -100,22 +133,38 @@
       </form>
       <div id="wishList"></div>
       <div id="pagination"></div>
-
-      <h2>Hadiah</h2>
-      <a href="https://www.giftster.com/list/Z7Ogt/" target="_blank" class="button">Lihat Gift List</a>
+    </div>
+    <div class="spacer"></div>
+        <div class="container">
+      <h2>Pangajab Tanda Asih</h2>
+      <p>Doa restu Anda merupakan hadiah terbaik bagi kami. Namun, apabila ingin berbagi tanda kasih, tanpa mengurangi rasa hormat dan untuk menghindari mubadzir, mohon cek link dibawah dahulu jika berniat untuk mengirimkan hadiah</p>
+      <a href="https://www.giftster.com/list/Z7Ogt/" target="_blank" class="button"> Lihat Daftar Gift </a>
       <div class="qr">
-        <p>QR Code Fauzi</p>
-        <img src="qr-fauzi.png" alt="QR Code Fauzi">
-        <p>QR Code Liansky</p>
-        <img src="qr-liansky.png" alt="QR Code Liansky">
+        
+        <p>Untuk kemudahan berbagi kebahagiaan, kami sertakan pula nomor rekening di bawah ini.</p>
+        <p><strong>BCA a/n Salsabila Liansky</strong></p> 
+        <p><strong>2530029690 </strong></p>
+        <p><strong>Mandiri a/n Salsabila Liansky</strong></p>
+        <p><strong>1650002541713</strong></p>
       </div>
 
-      <h2>Galeri Instagram</h2>
-      <iframe src="https://snapwidget.com/embed/1100649" class="snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:100%; height:510px;" title="Instagram Gallery"></iframe>
-    </div>
+      <div class="spacer-md"></div>
+
+      <strong><h2>Seketar Kenangan</h2></strong>
+<iframe src="https://snapwidget.com/embed/1101907" class="snapwidget-widget" allowtransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden;  width:100%; height:1020px" title="Riansukkun Instagram"></iframe>    </div>
   </div>
 
   <script>
+    function getQueryParam(param) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
+}
+
+const guestName = getQueryParam("to");
+if (guestName) {
+  document.getElementById("guest-name").innerHTML = `<p>Kepada Yth. <strong>${decodeURIComponent(guestName)}</strong></p>`;
+}
+
     const firebaseConfig = {
       apiKey: "AIzaSyD_XJTed1xlR885PImafVa5dRXlaDtkT4M",
       authDomain: "fauzi-cacha.firebaseapp.com",
@@ -141,7 +190,7 @@
       const weeks = Math.floor(totalHours / (24 * 7));
       const days = Math.floor((totalHours % (24 * 7)) / 24);
       const hours = totalHours % 24;
-      countdown.innerHTML = `Menuju Akad: ${weeks} minggu ${days} hari ${hours} jam lagi`;
+      countdown.innerHTML = `${weeks} minggu ${days} hari ${hours} jam lagi`;
     }, 1000);
 
     const bgMusic = document.getElementById("bg-music");
@@ -155,7 +204,7 @@
 
     document.getElementById("rsvpForm").addEventListener("submit", (e) => {
       e.preventDefault();
-      db.ref('rsvp').push({
+      db.ref('SESI 1').push({
         nama: document.getElementById("rsvpNama").value,
         status: document.getElementById("rsvpStatus").value,
         jumlah: document.getElementById("rsvpJumlah").value
@@ -178,7 +227,7 @@
     const pagination = document.getElementById("pagination");
     let wishes = [];
     let currentPage = 1;
-    const wishesPerPage = 10;
+    const wishesPerPage = 6;
 
     function loadWishes(page) {
       db.ref('wishes').once('value', (snapshot) => {
